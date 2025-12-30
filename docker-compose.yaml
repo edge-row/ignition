@@ -1,0 +1,27 @@
+services:
+  ignition:
+    image: inductiveautomation/ignition:8.3.0
+    ports:
+      - "8088:8088" 
+      - "8043:8043"
+    volumes:
+      - ignition_data:/usr/local/bin/ignition/data
+    environment:
+      - GATEWAY_ADMIN_PASSWORD=password123
+      - IGNITION_EDITION=standard
+      - ACCEPT_IGNITION_EULA=Y
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: ignition_user
+      POSTGRES_PASSWORD: ignition_password
+      POSTGRES_DB: qca_ops
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  ignition_data:
+  db_data:
