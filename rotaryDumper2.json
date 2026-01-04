@@ -1,0 +1,56 @@
+{
+    "name": "RD02",
+    "tagType": "Folder",
+    "tags": [
+        {
+            "dataType": "Float4",
+            "expression": "if({[.]Running}, 3400 + sin({[.]CyclePhase_Sec} * 0.25) * 180, 0)",
+            "historyEnabled": true,
+            "historyProvider": "QCA_Historian",
+            "name": "TonnageRate_TPH",
+            "tagType": "AtomicTag",
+            "valueSource": "expr"
+        },
+        {
+            "dataType": "Boolean",
+            "expression": "{[.]CyclePhase_Sec} >= 10 && {[.]CyclePhase_Sec} < 20",
+            "name": "DumpingProduct",
+            "tagType": "AtomicTag",
+            "valueSource": "expr"
+        },
+        {
+            "dataType": "Float4",
+            "expression": "if({[.]CyclePhase_Sec} < 5, \n  0,\n  if({[.]CyclePhase_Sec} < 20,\n    ({[.]CyclePhase_Sec} - 5) * 10.67,\n    if({[.]CyclePhase_Sec} < 27,\n      160 - (({[.]CyclePhase_Sec} - 20) * 22.86),\n      0\n    )\n  )\n)",
+            "name": "RotationAngle_Deg",
+            "tagType": "AtomicTag",
+            "valueSource": "expr"
+        },
+        {
+            "dataType": "Boolean",
+            "expression": "{[.]CyclePhase_Sec} >= 5 && {[.]CyclePhase_Sec} < 27",
+            "name": "Running",
+            "tagType": "AtomicTag",
+            "valueSource": "expr"
+        },
+        {
+            "dataType": "Boolean",
+            "expression": "false",
+            "name": "RotaryJam",
+            "tagType": "AtomicTag",
+            "valueSource": "expr"
+        },
+        {
+            "expression": "(getSecond(now()) + 15) % 30",
+            "name": "CyclePhase_Sec",
+            "tagType": "AtomicTag",
+            "valueSource": "expr"
+        },
+        {
+            "dataType": "Boolean",
+            "expression": "{[.]CyclePhase_Sec} >= 5 && {[.]CyclePhase_Sec} < 28",
+            "name": "ClampEngaged",
+            "tagType": "AtomicTag",
+            "valueSource": "expr"
+        }
+    ]
+}
