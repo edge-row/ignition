@@ -1,0 +1,159 @@
+{
+  "name": "",
+  "tagType": "Provider",
+  "tags": [
+    {
+      "name": "Dumpers",
+      "tagType": "Folder",
+      "tags": [
+        {
+          "name": "RD02",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "dataType": "Boolean",
+              "expression": "false",
+              "historyEnabled": true,
+              "historyProvider": "QCA_Historian",
+              "name": "RotaryJam",
+              "tagType": "AtomicTag",
+              "valueSource": "expr"
+            },
+            {
+              "expression": "(getSecond(now()) + 15) % 30",
+              "historyEnabled": true,
+              "historyProvider": "QCA_Historian",
+              "name": "CyclePhase_Sec",
+              "tagType": "AtomicTag",
+              "valueSource": "expr"
+            },
+            {
+              "dataType": "Boolean",
+              "expression": "{[.]CyclePhase_Sec} \u003e\u003d 10 \u0026\u0026 {[.]CyclePhase_Sec} \u003c 20",
+              "historyEnabled": true,
+              "historyProvider": "QCA_Historian",
+              "name": "DumpingProduct",
+              "tagType": "AtomicTag",
+              "valueSource": "expr"
+            },
+            {
+              "dataType": "Float4",
+              "expression": "if({[.]CyclePhase_Sec} \u003c 5, \n  0,\n  if({[.]CyclePhase_Sec} \u003c 20,\n    ({[.]CyclePhase_Sec} - 5) * 10.67,\n    if({[.]CyclePhase_Sec} \u003c 27,\n      160 - (({[.]CyclePhase_Sec} - 20) * 22.86),\n      0\n    )\n  )\n)",
+              "historyEnabled": true,
+              "historyProvider": "QCA_Historian",
+              "name": "RotationAngle_Deg",
+              "tagType": "AtomicTag",
+              "valueSource": "expr"
+            },
+            {
+              "dataType": "Boolean",
+              "expression": "{[.]CyclePhase_Sec} \u003e\u003d 5 \u0026\u0026 {[.]CyclePhase_Sec} \u003c 27",
+              "historyEnabled": true,
+              "historyProvider": "QCA_Historian",
+              "name": "Running",
+              "tagType": "AtomicTag",
+              "valueSource": "expr"
+            },
+            {
+              "dataType": "Boolean",
+              "expression": "{[.]CyclePhase_Sec} \u003e\u003d 5 \u0026\u0026 {[.]CyclePhase_Sec} \u003c 28",
+              "historyEnabled": true,
+              "historyProvider": "QCA_Historian",
+              "name": "ClampEngaged",
+              "tagType": "AtomicTag",
+              "valueSource": "expr"
+            },
+            {
+              "dataType": "Float4",
+              "expression": "if({[.]Running}, 3400 + sin({[.]CyclePhase_Sec} * 0.25) * 180, 0)",
+              "historyEnabled": true,
+              "historyProvider": "QCA_Historian",
+              "name": "TonnageRate_TPH",
+              "tagType": "AtomicTag",
+              "valueSource": "expr"
+            }
+          ]
+        },
+        {
+          "name": "RD01",
+          "tagType": "Folder",
+          "tags": [
+            {
+              "dataType": "Float4",
+              "expression": "if({[.]Running}, 3600 + sin({[.]CyclePhase_Sec} * 0.3) * 200, 0)",
+              "historyEnabled": true,
+              "historyProvider": "QCA_Historian",
+              "name": "TonnageRate_TPH",
+              "tagType": "AtomicTag",
+              "valueSource": "expr"
+            },
+            {
+              "dataType": "Boolean",
+              "expression": "{[.]CyclePhase_Sec} \u003e\u003d 10 \u0026\u0026 {[.]CyclePhase_Sec} \u003c 20",
+              "historyEnabled": true,
+              "historyProvider": "QCA_Historian",
+              "name": "DumpingProduct",
+              "tagType": "AtomicTag",
+              "valueSource": "expr"
+            },
+            {
+              "dataType": "Float4",
+              "expression": "if({[.]CyclePhase_Sec} \u003c 5, \n  0,\n  if({[.]CyclePhase_Sec} \u003c 20,\n    ({[.]CyclePhase_Sec} - 5) * 10.67,\n    if({[.]CyclePhase_Sec} \u003c 27,\n      160 - (({[.]CyclePhase_Sec} - 20) * 22.86),\n      0\n    )\n  )\n)",
+              "historyEnabled": true,
+              "historyProvider": "QCA_Historian",
+              "name": "RotationAngle_Deg",
+              "tagType": "AtomicTag",
+              "valueSource": "expr"
+            },
+            {
+              "dataType": "Boolean",
+              "expression": "{[.]CyclePhase_Sec} \u003e\u003d 5 \u0026\u0026 {[.]CyclePhase_Sec} \u003c 27 \u0026\u0026 !{[.]RotaryJam}",
+              "historyEnabled": true,
+              "historyProvider": "QCA_Historian",
+              "name": "Running",
+              "tagType": "AtomicTag",
+              "valueSource": "expr"
+            },
+            {
+              "alarms": [
+                {
+                  "name": "Rotary Jam",
+                  "priority": "High",
+                  "setpointA": 1.0
+                }
+              ],
+              "dataType": "Boolean",
+              "expression": "getSecond(now()) % 30 \u003e\u003d 20 \u0026\u0026 getSecond(now()) % 30 \u003c 30",
+              "historyEnabled": true,
+              "historyProvider": "QCA_Historian",
+              "name": "RotaryJam",
+              "tagType": "AtomicTag",
+              "valueSource": "expr"
+            },
+            {
+              "expression": "getSecond(now()) % 30",
+              "historyEnabled": true,
+              "historyProvider": "QCA_Historian",
+              "name": "CyclePhase_Sec",
+              "tagType": "AtomicTag",
+              "valueSource": "expr"
+            },
+            {
+              "dataType": "Boolean",
+              "expression": "{[.]CyclePhase_Sec} \u003e\u003d 5 \u0026\u0026 {[.]CyclePhase_Sec} \u003c 28",
+              "historyEnabled": true,
+              "historyProvider": "QCA_Historian",
+              "name": "ClampEngaged",
+              "tagType": "AtomicTag",
+              "valueSource": "expr"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "_types_",
+      "tagType": "Folder"
+    }
+  ]
+}
