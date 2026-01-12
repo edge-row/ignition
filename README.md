@@ -10,8 +10,8 @@ A system for managing inbound processes and EDI operations.
 
 ### Dumping Status
 
-<video src="sample-dumping-status.mp4" controls width="800"></video>
+[sample-dumping-status.mp4](sample-dumping-status.mp4)
 
 ### EDI Process
 
-<video src="sample-edi-process.mp4" controls width="800"></video>
+[sample-edi-process.mp4](sample-edi-process.mp4)
