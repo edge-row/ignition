@@ -4,7 +4,7 @@ A system for managing inbound processes and EDI operations.
 
 ## Entity Relationship Diagram
 
-![ERD Diagram](ERD-diagram.png)
+![ERD Diagram](bulk-handling-erd.jpeg)
 
 ## Sample Videos
 
